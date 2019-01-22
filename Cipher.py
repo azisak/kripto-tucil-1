@@ -9,7 +9,7 @@ class VigenereStandard:
         self.key = newKey.lower()
 
     def encrypt(self, text):
-        text = text.lower()
+        text = text.lower().replace(' ','')
         text, key = self.__normalizeTextKey(text, self.key)
         text = list(map(lambda p: ord(p) % ord('a'), list(text)))
         key = list(map(lambda p: ord(p) % ord('a'), list(key)))
@@ -19,7 +19,6 @@ class VigenereStandard:
         return cipherText
 
     def decrypt(self, text):
-        text = text.lower()
         text, key = self.__normalizeTextKey(text, self.key)
         text = list(map(lambda p: ord(p) % ord('a'), list(text)))
         key = list(map(lambda p: ord(p) % ord('a'), list(key)))
@@ -68,6 +67,7 @@ class Playfair:
         self.key = self.__createMatrixKey(newKey.lower())
     
     def encrypt(self, text): 
+        text = text.lower().replace(' ','')
         text = text.replace(self.escape_char,self.replace_char)
         bi_gram = self.__createBigram(text)
         newChars = []

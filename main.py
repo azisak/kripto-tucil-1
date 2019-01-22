@@ -7,13 +7,13 @@ if __name__ == "__main__":
   plaintext = fileReader.getText()
   fmt = OutputFormatter()
 
-  cipher = Playfair("jalanganeshasepuluh")
+  cipher = VigenereStandard("jalanganeshasepuluh")
   ciphertext = cipher.encrypt(plaintext)
   decryptedCipher = cipher.decrypt(ciphertext)
 
   print("Plain text :", plaintext)
   print("Cipher text :", ciphertext)
   print("Decrypted cipher :")
-  # print("\tOriginalFormat:",fmt.)
+  print("\tOriginalForma:",fmt.originalFormat(plaintext, decryptedCipher))
   print("\tWithoutSpaces:", fmt.withoutSpacing(decryptedCipher))
   print("\tGroupOfNWords:", fmt.groupOfNWords(decryptedCipher))
