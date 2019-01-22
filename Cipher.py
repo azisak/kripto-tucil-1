@@ -58,7 +58,6 @@ class ViginereRunningKey(VigenereStandard):
         self.key = key.lower()
 
 class Playfair:
-    
     def __init__(self, key="playfair", escape_char='j', replace_char='i', padding_char='x'):
         self.escape_char = escape_char
         self.replace_char = replace_char
@@ -86,12 +85,27 @@ class Playfair:
 
         return ''.join(newChars)
 
-    def decrypt(self, text): pass
-        # TODO: implement PlayFair's decrypt
-
+    def decrypt(self, text): 
+        bi_gram = self.__createBigram(text)
+        newChars = []
+        for leftChar, rightChar in bi_gram:
+            posLeft = np.where(self.key == leftChar)
+            posRight = np.where(self.key == rightChar)
+            newChar = ""
+            if (posLeft[0].item() == posRight[0].item()): # Same row
+                newChar = self.key[posLeft[0].item(),(posLeft[1].item()-1) % 5] + self.key[posRight[0].item(),(posRight[1].item()-1) % 5]
+            elif (posLeft[1].item() == posRight[1].item()): # Same Column
+                newChar = self.key[(posLeft[0].item()-1) % 5,posLeft[1].item()] + self.key[(posRight[0].item()-1) % 5,posRight[1].item()] 
+            else:
+                newChar = self.key[posLeft[0].item(),posRight[1].item()] + self.key[posRight[0].item(),posLeft[1].item()]
+            newChars.append(newChar)
+        plainText = ''.join(newChars)
+        plainText = plainText.replace(self.padding_char,'') 
+        return plainText
+        
     def __createBigram(self, text):
         li = list(text)
-        # Padding the 
+        # Padding the similar neighbour
         li = [li[i]+self.padding_char if li[i] == li[i+1] else li[i] for i in range(len(li)-1) ]
         li = ''.join(li) + text[-1]
         if (len(li) % 2 != 0):
