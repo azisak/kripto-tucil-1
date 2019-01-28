@@ -5,18 +5,13 @@ class OutputFormatter:
     pass
 
   def originalFormat(self, plainText, cipherText): 
-    words = plainText.split(' ')
-    cwords = []
-    i = 0
-    for w in words:
-      cwords += [cipherText[i:i+len(w)]]
-      i+=len(w)
-    cwords = ' '.join(cwords)
-    cwords = [cwords[i].upper() if plainText[i].isupper() else cwords[i].lower()  for i in range(len(plainText))]
-    return ''.join(cwords)
+    text = list(plainText)
+    cpr = list(cipherText)
+    text = [cpr.pop(0) if c.isalpha() else c for c in text]
+    return "".join(text)
 
-
-  def withoutSpacing(self, text):
+  def withoutSpacing(self, plainText, cipherText):
+    text = self.originalFormat(plainText, cipherText)
     return text.replace(' ','');
 
   def groupOfNWords(self, text, N=5):
