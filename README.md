@@ -2,6 +2,13 @@
 
 oleh : Azis Adi Kuncoro (13515120)  
 
+### UI
+Current user interface: 
+
+
+![User-Interface](./ui-kripto.png)
+
+
 ### Feature :
   1. Able to input plain text from following interfaces:
       - File (any kind of files)
