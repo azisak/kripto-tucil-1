@@ -60,7 +60,7 @@ class VigenereFull(VigenereStandard):
         cipherText = map(lambda p: chr(
             (self.matrix[p[1]][p[0]]) % 26 + ord('a')), zip(text, key))
         cipherText = ''.join(list(cipherText))
-        return cipherText
+        return cipherText.upper()
 
     def decrypt(self, text):
         text = "".join([c for c in text.lower() if c.isalpha() ])
@@ -70,7 +70,7 @@ class VigenereFull(VigenereStandard):
         plainText = map(lambda p: chr(
             (np.where(self.matrix[p[1]] == p[0])[0].item()) % 26 + ord('a')), zip(text, key))
         plainText = ''.join(list(plainText))
-        return plainText
+        return plainText.lower()
 
     def __normalizeTextKey(self, text, key):
         if (text.__len__() == key.__len__()):
@@ -100,20 +100,20 @@ class VigenereFull(VigenereStandard):
 class VigenereExtended(VigenereStandard):
     def encrypt(self, text):
         if (type(text) == str):
-            text = text.encode("utf-8")
+            text = text.encode("ascii")
         text, key = self.__normalizeTextKey(text, self.key)
         text = list(text)
-        key = list(key.encode("utf-8"))
+        key = list(key.encode("ascii"))
         cipherText = map(lambda p: (p[0] + p[1]) % 256, zip(text, key))
         cipherText = bytes(list(cipherText))
         return cipherText
 
     def decrypt(self, text):
         if (type(text) == str):
-            text = text.encode("utf-8")
+            text = text.encode("ascii")
         text, key = self.__normalizeTextKey(text, self.key)
         text = list(text)
-        key = list(key.encode("utf-8"))
+        key = list(key.encode("ascii"))
         plainText = map(lambda p: 
             (p[0] - p[1]) % 256, zip(text, key))
         plainText = bytes(list(plainText))
@@ -191,8 +191,7 @@ class Playfair:
             else:
                 newChar = self.key[posLeft[0].item(),posRight[1].item()] + self.key[posRight[0].item(),posLeft[1].item()]
             newChars.append(newChar)
-
-        return ''.join(newChars)
+        return ''.join(newChars).upper()
 
     def decrypt(self, text): 
         text = "".join([c for c in text.lower() if c.isalpha() ])
@@ -211,7 +210,7 @@ class Playfair:
             newChars.append(newChar)
         plainText = ''.join(newChars)
         plainText = plainText.replace(self.padding_char,'') 
-        return plainText
+        return plainText.lower()
         
     def __createBigram(self, text):
         li = list(text)

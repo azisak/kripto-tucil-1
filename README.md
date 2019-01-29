@@ -8,6 +8,14 @@ Current user interface:
 
 ![User-Interface](./ui-kripto.png)
 
+### Usage :
+
+Start the app
+
+
+```
+  python Application.py
+```
 
 ### Feature :
   1. Able to input plain text from following interfaces:

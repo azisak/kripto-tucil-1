@@ -1,19 +1,26 @@
 
 
 class OutputFormatter:
-  def __init__(self):
-    pass
+  def __init__(self): pass
 
-  def originalFormat(self, plainText, cipherText): 
-    text = list(plainText)
-    cpr = list(cipherText)
+class Original(OutputFormatter):
+  def format(self, originalText, encodedText):
+    text = list(originalText)
+    cpr = list(encodedText)
     text = [cpr.pop(0) if c.isalpha() else c for c in text]
     return "".join(text)
 
-  def withoutSpacing(self, plainText, cipherText):
-    text = self.originalFormat(plainText, cipherText)
-    return text.replace(' ','');
+class NoSpaces(OutputFormatter):
+  def format(self, originalText, encodedText):
+    text = list(originalText)
+    cpr = list(encodedText)
+    text = [cpr.pop(0) if c.isalpha() else c for c in text]
+    text = "".join(text)
+    return text.replace(' ','')
 
-  def groupOfNWords(self, text, N=5):
-    grouped = " ".join([text[i:i+N] for i in range(0,len(text),N)])
-    return grouped
+class GroupOfWords(OutputFormatter):
+  def format(self, originalText, encodedText):
+    N = 5
+    return " ".join([encodedText[i:i+N] for i in range(0,len(encodedText),N)])
+    
+
